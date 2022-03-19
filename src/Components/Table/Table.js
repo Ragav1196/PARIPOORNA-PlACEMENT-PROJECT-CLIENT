@@ -8,269 +8,14 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import "./Table.css";
+import { API_URL } from "../GlobalConstant";
+import { useEffect } from "react";
 
-const columns = [
-  { id: "name", label: "Name", align: "center", minWidth: 100 },
-  { id: "email", label: "E-Mail", align: "center", minWidth: 100 },
-  {
-    id: "mobile",
-    label: "Mobile",
-    minWidth: 110,
-    align: "center",
-  },
-  {
-    id: "dob",
-    label: "DOB",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "jobType",
-    label: "Job Type",
-    minWidth: 50,
-    align: "center",
-  },
-
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 120,
-    align: "center",
-  },
-];
-
-function createData(name, email, mobile, dob, jobType, action) {
-  return { name, email, mobile, dob, jobType, action };
-}
-
-const rows = [
-  createData(
-    "Ragavendiran Panchatsharam",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-  createData(
-    "Ragavendiran",
-    "ragavinrap@gmail.com",
-    "+91-9444249040",
-    "01-10-1996",
-    "Part Time"
-  ),
-];
-
-export default function StickyHeadTable() {
+export default function StickyHeadTable({
+  setEditDetails,
+  fetchedDetails,
+  setFetchedDetails,
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -283,6 +28,63 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  // TO GET THE APPLICANT DETAILS EVERY TIME THE PAGE RELOADS
+  useEffect(() => {
+    fetch(`${API_URL}/details`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => setFetchedDetails(response.data));
+  }, []);
+
+  // TO DELETE APPLICANT DETAILS
+  const DeleteApplicantDetails = async (id) => {
+    console.log(id);
+    await fetch(`${API_URL}/details/${id}`, {
+      method: "DELETE",
+    });
+
+    // TO REFRESH THE APPLICANT DETAILS TABLE AFTER DELETING
+    await fetch(`${API_URL}/details`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => setFetchedDetails(response.data));
+  };
+
+  const columns = [
+    { id: "name", label: "Name", align: "center", minWidth: 100 },
+    { id: "email", label: "E-Mail", align: "center", minWidth: 100 },
+    {
+      id: "mobileNum",
+      label: "MobileNum",
+      minWidth: 110,
+      align: "center",
+    },
+    {
+      id: "dob",
+      label: "DOB",
+      minWidth: 100,
+      align: "center",
+    },
+    {
+      id: "jobType",
+      label: "Job Type",
+      minWidth: 50,
+      align: "center",
+    },
+
+    {
+      id: "action",
+      label: "Action",
+      minWidth: 120,
+      align: "center",
+    },
+  ];
+
+  // ADDING FETCHED DETAILS OF APPLICANT FROM DATABASE TO THE TABLE
+  const rows = fetchedDetails ? [...fetchedDetails] : [];
+
   return (
     <section className="table_mainCntr">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -290,9 +92,9 @@ export default function StickyHeadTable() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns.map((column, i) => (
                   <TableCell
-                    key={column.id}
+                    key={i}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
                   >
@@ -304,23 +106,30 @@ export default function StickyHeadTable() {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((row, i) => {
                   return (
                     <TableRow
+                      id={row._id}
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.code}
+                      key={i}
                     >
-                      {columns.map((column) => {
+                      {columns.map((column, i) => {
                         const value = row[column.id];
-                        console.log(value);
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell key={i} align={column.align}>
                             {column.id === "action" ? (
                               <div>
-                                <button>Edit</button>
-                                <button style={{ marginLeft: "10px" }}>
+                                <button onClick={() => setEditDetails(row)}>
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    DeleteApplicantDetails(row._id)
+                                  }
+                                  style={{ marginLeft: "10px" }}
+                                >
                                   Delete
                                 </button>
                               </div>
