@@ -1,0 +1,94 @@
+/* MAIN CONTAINER */
+.form_mainCntr {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* FORM */
+.form_mainCntr form {
+  margin: 20px;
+  width: 80%;
+  background-color: whitesmoke;
+  border-radius: 10px;
+}
+
+/* FIELD SET */
+.form_mainCntr form fieldset {
+  margin: 20px;
+  border: 3px solid rgb(172, 226, 175);
+}
+
+/* INPUT FIELDS MAIN CONTAINER */
+.form_mainCntr .inputFields {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto auto auto auto;
+  justify-items: center;
+  gap: 20px;
+}
+
+/* INPUT FIELD LABEL */
+.form_mainCntr .inputFields > label,
+.form_mainCntr .inputFields > label,
+.form_mainCntr .inputFields > label {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: center;
+  width: 80%;
+}
+
+/* PROFILE PICTURE */
+.form_mainCntr .applicant_img_cntr {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: center;
+  width: 80%;
+}
+
+.form_mainCntr .applicant_img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  grid-column-start: 2;
+}
+
+/* MOBILE NUMBER INPUT FIELD */
+.form_mainCntr .mobileNum > div {
+  display: flex;
+  gap: 10px;
+}
+
+.form_mainCntr .mobileNum > div > input:nth-of-type(1) {
+  width: 30px;
+}
+
+/* JOB TYPE INPUT FIELD */
+.form_mainCntr .JobType {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: center;
+}
+
+.form_mainCntr .JobType > div > input:not(:nth-of-type(1)) {
+  margin-left: 15px;
+}
+
+/* PREFERRED LOCATION MAIN CONTAINER */
+.form_mainCntr .pref_location {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  width: 80%;
+  align-items: baseline;
+}
+
+/* PREFERRED LOCATION MAIN CONTAINER EACH CHECKBOX */
+.form_mainCntr .pref_location > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* SUBMIT BUTTON */
+.form_mainCntr .submit_btn {
+  float: right;
+}

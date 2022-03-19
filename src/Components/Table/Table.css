@@ -1,0 +1,10 @@
+/* TABLE MAIN CONTAINER */
+.table_mainCntr {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0px;
+}
+
+.table_mainCntr > div {
+  width: 80%;
+}
