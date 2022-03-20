@@ -16,8 +16,13 @@
     justify-content: space-around;
   }
 
+  .moreDetailsCntr > article:nth-of-type(2) {
+    align-items: center;
+  }
+
   .moreDetailsCntr > article p {
     margin: 10px 0px;
+    font-size: 12px;
   }
 
   /* PROFILE PICTURE */
@@ -28,9 +33,16 @@
   }
 
   /* EDIT AND DELETE BUTTONS */
-  .buttonsCntr {
+  .moreDetailsCntr .buttonsCntr {
     display: flex;
     gap: 10px;
+  }
+
+  .moreDetailsCntr .editBtn,
+  .moreDetailsCntr .deleteBtn {
+    width: 30px;
+    height: 22px;
+    font-size: 12px;
   }
 }
 

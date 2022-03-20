@@ -1,4 +1,5 @@
 import { DeleteApplicantDetails } from "../../GlobalConstant";
+import Button from "@mui/material/Button";
 import "./MoreDetails.css";
 
 export function MoreDetails({
@@ -40,17 +41,26 @@ export function MoreDetails({
         </div>
 
         <div className="buttonsCntr">
-          <button onClick={() => setEditDetails(details)}>Edit</button>
-          <button
+          <Button
+            onClick={() => setEditDetails(details)}
+            className="editBtn btnAnim"
+            variant="contained"
+          >
+            Edit
+          </Button>
+
+          <Button
             onClick={() => {
               if (editDetails) {
                 setEditDetails(ApplicantDetails);
               }
               DeleteApplicantDetails(details._id, setFetchedDetails);
             }}
+            className="deleteBtn btnAnim"
+            variant="contained"
           >
             Delete
-          </button>
+          </Button>
         </div>
       </article>
     </section>

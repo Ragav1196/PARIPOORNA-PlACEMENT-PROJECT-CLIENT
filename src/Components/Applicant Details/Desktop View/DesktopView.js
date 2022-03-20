@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
 import "./DesktopView.css";
 import {
   DeleteApplicantDetails,
@@ -115,10 +116,16 @@ export default function StickyHeadTable({
                           <TableCell key={i} align={column.align}>
                             {column.id === "action" ? (
                               <div>
-                                <button onClick={() => setEditDetails(row)}>
+                                <Button
+                                  onClick={() => setEditDetails(row)}
+                                  style={{ fontSize: "12px" }}
+                                  className="editBtn btnAnim"
+                                  variant="contained"
+                                >
                                   Edit
-                                </button>
-                                <button
+                                </Button>
+
+                                <Button
                                   onClick={() => {
                                     if (editDetails) {
                                       setEditDetails(ApplicantDetails);
@@ -128,10 +135,15 @@ export default function StickyHeadTable({
                                       setFetchedDetails
                                     );
                                   }}
-                                  style={{ marginLeft: "10px" }}
+                                  style={{
+                                    marginLeft: "10px",
+                                    fontSize: "12px",
+                                  }}
+                                  className="deleteBtn btnAnim"
+                                  variant="contained"
                                 >
                                   Delete
-                                </button>
+                                </Button>
                               </div>
                             ) : (
                               value

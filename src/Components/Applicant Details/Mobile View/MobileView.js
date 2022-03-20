@@ -94,11 +94,15 @@ export function MobileView({
         <div className="applicantDetailsCntr">
           {fetchedDetails && searchedNames === 1
             ? fetchedDetails.map((details, i) => (
-                <div key={i}>
+                <div
+                  className={show === i ? "" : "MoreDetailsMainCntr"}
+                  key={i}
+                >
                   <p
                     style={{
                       borderBottom: show === i ? "3px solid black" : "initial",
-                      backgroundColor: show === i ? "green" : "initial",
+                      backgroundColor:
+                        show === i ? "rgb(0, 129, 131)" : "initial",
                     }}
                     onClick={() => {
                       if (show !== i) {
@@ -120,17 +124,19 @@ export function MobileView({
                   />
                 </div>
               ))
-            : searchresult.map((details, i) => (
-                <div key={i}>
-                  {searchedNames === 0 ? (
-                    <p>APPLICANT DOES NOT EXIST WITH THAT NAME</p>
-                  ) : (
-                    <div>
+            : searchresult.map((details, i) => {
+                if (searchedNames !== 0) {
+                  return (
+                    <div
+                      className={show === i ? "" : "MoreDetailsMainCntr"}
+                      key={i}
+                    >
                       <p
                         style={{
                           borderBottom:
                             show === i ? "3px solid black" : "initial",
-                          backgroundColor: show === i ? "green" : "initial",
+                          backgroundColor:
+                            show === i ? "rgb(0, 129, 131)" : "initial",
                         }}
                         onClick={() => {
                           if (show !== i) {
@@ -151,9 +157,11 @@ export function MobileView({
                         setFetchedDetails={setFetchedDetails}
                       />
                     </div>
-                  )}
-                </div>
-              ))}
+                  );
+                } else {
+                  return <p>APPLICANT DOES NOT EXIST WITH THAT NAME</p>;
+                }
+              })}
         </div>
       </article>
     </section>

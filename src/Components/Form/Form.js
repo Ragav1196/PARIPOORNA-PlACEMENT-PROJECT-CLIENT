@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as yup from "yup";
 import { AddApplicantDetails, EditApplicantDetails } from "../GlobalConstant";
+import Button from "@mui/material/Button";
 import "./Form.css";
 
 export function Form({ editDetails, setFetchedDetails }) {
@@ -28,7 +29,7 @@ export function Form({ editDetails, setFetchedDetails }) {
   } = useFormik({
     initialValues: {
       name: "",
-      countryCode: "",
+      countryCode: "+91",
       mobileNum: "",
       email: "",
       jobType: "",
@@ -119,15 +120,12 @@ export function Form({ editDetails, setFetchedDetails }) {
               Mobile
               <div>
                 <input
-                  type="number"
+                  type="text"
                   id="countryCode"
                   name="countryCode"
                   onChange={handleChange}
-                  onBlur={handleBlur}
                   value={values.countryCode}
-                  className={
-                    errors.countryCode && touched.countryCode ? "errors" : ""
-                  }
+                  disabled
                 />
 
                 <input
@@ -276,9 +274,13 @@ export function Form({ editDetails, setFetchedDetails }) {
           </article>
 
           {/* SUBMIT BUTTON */}
-          <button type="submit" className="submit_btn">
+          <Button
+            type="submit"
+            className="submit_btn btnAnim"
+            variant="contained"
+          >
             ADD/UPDATE
-          </button>
+          </Button>
         </fieldset>
       </form>
     </section>
