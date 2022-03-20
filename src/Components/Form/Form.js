@@ -5,8 +5,6 @@ import { AddApplicantDetails, EditApplicantDetails } from "../GlobalConstant";
 import "./Form.css";
 
 export function Form({ editDetails, setFetchedDetails }) {
-  const [errMsg, setErrMsg] = useState(null);
-
   // FORM VALIDATION
   const formValidationSchema = yup.object({
     name: yup.string().required(),
@@ -58,7 +56,7 @@ export function Form({ editDetails, setFetchedDetails }) {
         setFieldValue(details, editDetails[details]);
       }
     }
-  }, [editDetails]);
+  }, [editDetails, setFieldValue]);
 
   // TO SELECT THE APPLICANT PREFERRED LOCATION DETAILS DYNAMICALLY DURING EDITING
   const prefLocation = values.prefLocation;
@@ -231,7 +229,7 @@ export function Form({ editDetails, setFetchedDetails }) {
                     id="chennai"
                     name="prefLocation"
                     value="Chennai"
-                    checked={SetCheckboxValue("Chennai") == "Chennai"}
+                    checked={SetCheckboxValue("Chennai") === "Chennai"}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -249,7 +247,7 @@ export function Form({ editDetails, setFetchedDetails }) {
                     id="bangalore"
                     name="prefLocation"
                     value="Bangalore"
-                    checked={SetCheckboxValue("Bangalore") == "Bangalore"}
+                    checked={SetCheckboxValue("Bangalore") === "Bangalore"}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -267,7 +265,7 @@ export function Form({ editDetails, setFetchedDetails }) {
                     id="pune"
                     name="prefLocation"
                     value="Pune"
-                    checked={SetCheckboxValue("Pune") == "Pune"}
+                    checked={SetCheckboxValue("Pune") === "Pune"}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />

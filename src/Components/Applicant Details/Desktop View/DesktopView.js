@@ -44,7 +44,7 @@ export default function StickyHeadTable({
   };
 
   // TO GET THE APPLICANT DETAILS EVERY TIME THE PAGE RELOADS
-  useEffect(() => GetApplicantDetails(setFetchedDetails), []);
+  useEffect(() => GetApplicantDetails(setFetchedDetails), [setFetchedDetails]);
 
   const columns = [
     { id: "name", label: "Name", align: "center", minWidth: 100 },

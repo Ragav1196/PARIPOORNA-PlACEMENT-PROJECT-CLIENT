@@ -12,7 +12,7 @@ export function MobileView({
   setFetchedDetails,
 }) {
   // TO GET THE APPLICANT DETAILS EVERY TIME THE PAGE RELOADS
-  useEffect(() => GetApplicantDetails(setFetchedDetails), []);
+  useEffect(() => GetApplicantDetails(setFetchedDetails), [setFetchedDetails]);
 
   const [show, setShow] = useState(null); //TO HIDE/SHOW THE APPLICANT DETAILS BOX
   const [searchedNames, setSearchedNamed] = useState(1); //TO GET THE SEARCH RESULT OF THE APPLICANTS
