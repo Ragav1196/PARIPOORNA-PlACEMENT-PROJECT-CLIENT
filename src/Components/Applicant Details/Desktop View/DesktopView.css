@@ -8,3 +8,9 @@
 .table_mainCntr > div {
   width: 80%;
 }
+
+@media (max-width: 1200px) {
+  .table_mainCntr {
+    display: none;
+  }
+}

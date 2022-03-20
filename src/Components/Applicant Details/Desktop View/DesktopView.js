@@ -7,15 +7,30 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import "./Table.css";
-import { API_URL } from "../GlobalConstant";
+import "./DesktopView.css";
+import {
+  DeleteApplicantDetails,
+  GetApplicantDetails,
+} from "../../GlobalConstant";
 import { useEffect } from "react";
 
 export default function StickyHeadTable({
   setEditDetails,
+  editDetails,
   fetchedDetails,
   setFetchedDetails,
 }) {
+  // TO EMPTY THE FORM FIELDS AFTER DELETING THE APPLICANT DETAILS WHICH IS STILL HAVING EDIT FORM ACTIVE
+  const ApplicantDetails = {
+    name: "",
+    countryCode: "",
+    mobileNum: "",
+    email: "",
+    jobType: "",
+    dob: "",
+    prefLocation: [],
+  };
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -29,28 +44,7 @@ export default function StickyHeadTable({
   };
 
   // TO GET THE APPLICANT DETAILS EVERY TIME THE PAGE RELOADS
-  useEffect(() => {
-    fetch(`${API_URL}/details`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((response) => setFetchedDetails(response.data));
-  }, []);
-
-  // TO DELETE APPLICANT DETAILS
-  const DeleteApplicantDetails = async (id) => {
-    console.log(id);
-    await fetch(`${API_URL}/details/${id}`, {
-      method: "DELETE",
-    });
-
-    // TO REFRESH THE APPLICANT DETAILS TABLE AFTER DELETING
-    await fetch(`${API_URL}/details`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((response) => setFetchedDetails(response.data));
-  };
+  useEffect(() => GetApplicantDetails(setFetchedDetails), []);
 
   const columns = [
     { id: "name", label: "Name", align: "center", minWidth: 100 },
@@ -58,13 +52,13 @@ export default function StickyHeadTable({
     {
       id: "mobileNum",
       label: "MobileNum",
-      minWidth: 110,
+      minWidth: 70,
       align: "center",
     },
     {
       id: "dob",
       label: "DOB",
-      minWidth: 100,
+      minWidth: 50,
       align: "center",
     },
     {
@@ -125,9 +119,15 @@ export default function StickyHeadTable({
                                   Edit
                                 </button>
                                 <button
-                                  onClick={() =>
-                                    DeleteApplicantDetails(row._id)
-                                  }
+                                  onClick={() => {
+                                    if (editDetails) {
+                                      setEditDetails(ApplicantDetails);
+                                    }
+                                    DeleteApplicantDetails(
+                                      row._id,
+                                      setFetchedDetails
+                                    );
+                                  }}
                                   style={{ marginLeft: "10px" }}
                                 >
                                   Delete

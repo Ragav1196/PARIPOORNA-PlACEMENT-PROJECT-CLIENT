@@ -1,58 +1,21 @@
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
-import { API_URL } from "../GlobalConstant";
+import { AddApplicantDetails, EditApplicantDetails } from "../GlobalConstant";
 import "./Form.css";
 
 export function Form({ editDetails, setFetchedDetails }) {
-  // TO ADD NEW APPLICANT TO THE DATABASE
-  async function AddApplicantDetails(applicantDetails, resetForm) {
-    await fetch(`${API_URL}/details`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(applicantDetails),
-    });
-
-    resetForm(); //TO RESET THE FORM ONCE NEW APPLICANT ADDED
-
-    // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER ADDING
-    await fetch(`${API_URL}/details`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((response) => setFetchedDetails(response.data));
-  }
-
-  // TO EDIT THE SELECTED APPLICANT DETAILS AND PUSH TO THE DATABSE
-  async function EditApplicantDetails(applicantDetails, resetForm) {
-    delete applicantDetails._id;
-    await fetch(`${API_URL}/details/${editDetails._id}`, {
-      method: "PUT",
-      body: JSON.stringify(applicantDetails),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    resetForm(); //TO RESET THE FORM ONCE APPLICANT DETAILS EDITED AND SAVED
-
-    // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER EDITING
-    await fetch(`${API_URL}/details`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((response) => setFetchedDetails(response.data));
-  }
+  const [errMsg, setErrMsg] = useState(null);
 
   // FORM VALIDATION
   const formValidationSchema = yup.object({
-    name: yup.string().required("Please Provide Your Fullname"),
-    countryCode: yup.number().required("Please Provide YOur Country Code"),
-    mobileNum: yup.number().required("Please Provide Your Mobile Number"),
-    email: yup.string().required("Please Provide Your E-Mail"),
-    jobType: yup.string().required("please provide your Job Type"),
-    dob: yup.string().required("please provide your Date Of Birth"),
-    prefLocation: yup.array().min(1, "Please provide your Preferred Location"),
+    name: yup.string().required(),
+    countryCode: yup.number().required(),
+    mobileNum: yup.number().required(),
+    email: yup.string().required(),
+    jobType: yup.string().required(),
+    dob: yup.string().required(),
+    prefLocation: yup.array().min(1),
   });
 
   // FORMIK
@@ -77,9 +40,14 @@ export function Form({ editDetails, setFetchedDetails }) {
     validationSchema: formValidationSchema,
     onSubmit: (applicantDetails, { resetForm }) => {
       if (editDetails) {
-        return EditApplicantDetails(applicantDetails, resetForm);
+        return EditApplicantDetails(
+          applicantDetails,
+          resetForm,
+          editDetails,
+          setFetchedDetails
+        );
       }
-      AddApplicantDetails(applicantDetails, resetForm);
+      AddApplicantDetails(applicantDetails, resetForm, setFetchedDetails);
     },
   });
 
@@ -107,8 +75,19 @@ export function Form({ editDetails, setFetchedDetails }) {
         <fieldset>
           <legend>REGISTRATION</legend>
 
-          {/* FULL NAME */}
           <article className="inputFields">
+            {/* PROFILE PICTURE - MOBILE VIEW */}
+            <div className="applicant_img_cntr mobileView applicant_img_cntr_MV">
+              <img
+                className="applicant_img"
+                src="https://avatars.githubusercontent.com/u/91084155?v=4"
+                alt="Profile"
+              />
+
+              <input type="file" />
+            </div>
+
+            {/* FULL NAME */}
             <label htmlFor="name">
               Full Name
               <input
@@ -118,11 +97,12 @@ export function Form({ editDetails, setFetchedDetails }) {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.name}
+                className={errors.name && touched.name ? "errors" : ""}
               />
             </label>
 
-            {/* PROFILE PICTURE */}
-            <div className="applicant_img_cntr">
+            {/* PROFILE PICTURE - DESKTOP VIEW */}
+            <div className="applicant_img_cntr desktopView">
               <p>Profile Pic</p>
 
               <div>
@@ -147,7 +127,11 @@ export function Form({ editDetails, setFetchedDetails }) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.countryCode}
+                  className={
+                    errors.countryCode && touched.countryCode ? "errors" : ""
+                  }
                 />
+
                 <input
                   type="number"
                   id="mobileNum"
@@ -155,6 +139,9 @@ export function Form({ editDetails, setFetchedDetails }) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.mobileNum}
+                  className={
+                    errors.mobileNum && touched.mobileNum ? "errors" : ""
+                  }
                 />
               </div>
             </label>
@@ -169,6 +156,7 @@ export function Form({ editDetails, setFetchedDetails }) {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}
+                className={errors.email && touched.email ? "errors" : ""}
               />
             </label>
 
@@ -176,7 +164,9 @@ export function Form({ editDetails, setFetchedDetails }) {
             <div className="JobType">
               <p>Job Type</p>
 
-              <div>
+              <div
+                className={errors.jobType && touched.jobType ? "errorsSpl" : ""}
+              >
                 <input
                   type="radio"
                   id="ft"
@@ -220,15 +210,22 @@ export function Form({ editDetails, setFetchedDetails }) {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.dob}
+                className={errors.dob && touched.dob ? "errors" : ""}
               />
             </label>
 
-            {/* PREFERREF LOCATION */}
+            {/* PREFERREFD LOCATION */}
             <div className="pref_location">
               <p>Pref. Location</p>
 
               <div>
-                <div>
+                <div
+                  className={
+                    errors.prefLocation && touched.prefLocation
+                      ? "errorsSpl"
+                      : ""
+                  }
+                >
                   <input
                     type="checkbox"
                     id="chennai"
@@ -240,7 +237,13 @@ export function Form({ editDetails, setFetchedDetails }) {
                   />
                   <label htmlFor="chennai">Chennai</label>
                 </div>
-                <div>
+                <div
+                  className={
+                    errors.prefLocation && touched.prefLocation
+                      ? "errorsSpl"
+                      : ""
+                  }
+                >
                   <input
                     type="checkbox"
                     id="bangalore"
@@ -252,7 +255,13 @@ export function Form({ editDetails, setFetchedDetails }) {
                   />
                   <label htmlFor="bangalore">Bangalore</label>
                 </div>
-                <div>
+                <div
+                  className={
+                    errors.prefLocation && touched.prefLocation
+                      ? "errorsSpl"
+                      : ""
+                  }
+                >
                   <input
                     type="checkbox"
                     id="pune"

@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { Form } from "./Components/Form/Form";
-import StickyHeadTable from "./Components/Table/Table";
+import { ApplicantDetails } from "./Components/Applicant Details/ApplicantDetails";
 
 function App() {
   const [editDetails, setEditDetails] = useState(""); //TO DISPLAY THE DETAILS OF SELECTED APPLICANT
@@ -11,9 +11,8 @@ function App() {
     <div className="App">
       {/* REGISTRATION FORM */}
       <Form editDetails={editDetails} setFetchedDetails={setFetchedDetails} />
-
-      {/* TABLE TO DISPLAY THE APPLIICANT DETAILS */}
-      <StickyHeadTable
+      <ApplicantDetails
+        editDetails={editDetails}
         setEditDetails={setEditDetails}
         fetchedDetails={fetchedDetails}
         setFetchedDetails={setFetchedDetails}

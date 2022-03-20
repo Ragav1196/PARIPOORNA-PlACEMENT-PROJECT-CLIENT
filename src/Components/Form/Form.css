@@ -22,14 +22,11 @@
 .form_mainCntr .inputFields {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: auto auto auto auto;
   justify-items: center;
-  gap: 20px;
+  gap: 15px;
 }
 
 /* INPUT FIELD LABEL */
-.form_mainCntr .inputFields > label,
-.form_mainCntr .inputFields > label,
 .form_mainCntr .inputFields > label {
   display: grid;
   grid-template-columns: 30% 70%;
@@ -56,10 +53,15 @@
 .form_mainCntr .mobileNum > div {
   display: flex;
   gap: 10px;
+  justify-content: space-between;
 }
 
 .form_mainCntr .mobileNum > div > input:nth-of-type(1) {
-  width: 30px;
+  width: 24px;
+}
+
+.form_mainCntr .mobileNum > div > input:nth-of-type(2) {
+  width: 100%;
 }
 
 /* JOB TYPE INPUT FIELD */
@@ -91,4 +93,90 @@
 /* SUBMIT BUTTON */
 .form_mainCntr .submit_btn {
   float: right;
+  margin-right: 40px;
+}
+
+/* FORM FIELDS ERRORS */
+.form_mainCntr .errors {
+  border: 2px solid red;
+}
+
+.form_mainCntr .errorsSpl {
+  color: red;
+}
+
+.form_mainCntr .mobileView {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  /* INPUT FIELDS MAIN CONTAINER */
+  .form_mainCntr .inputFields {
+    grid-template-columns: none;
+  }
+
+  /* DESKTOP VIEW */
+  .form_mainCntr .desktopView {
+    display: none;
+  }
+
+  /* PROFILE PICTURE */
+  .form_mainCntr .applicant_img_cntr_MV {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+
+  .form_mainCntr .applicant_img {
+    width: 150px;
+    height: 150px;
+    grid-column-start: initial;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .form_mainCntr .applicant_img_cntr_MV input {
+    margin-left: 50%;
+    margin-top: 10px;
+  }
+
+  /* SUBMIT BUTTON */
+  .form_mainCntr .submit_btn {
+    float: initial;
+    margin-right: initial;
+    margin-top: 30px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 580px) {
+  /* FORM */
+  .form_mainCntr form {
+    width: 90%;
+  }
+
+  /* PROFILE PICTURE INPUT FIELD */
+  .form_mainCntr .applicant_img_cntr_MV input {
+    margin-left: 40%;
+  }
+
+  /* INPUT FIELD LABEL */
+  .form_mainCntr .inputFields > label {
+    grid-template-columns: initial;
+    gap: 10px;
+  }
+
+  /* JOB TYPE INPUT FIELD */
+  .form_mainCntr .JobType {
+    grid-template-columns: initial;
+    gap: 10px;
+  }
+
+  /* PREFERRED LOCATION MAIN CONTAINER */
+  .form_mainCntr .pref_location {
+    grid-template-columns: 40% 60%;
+    justify-items: center;
+  }
 }
