@@ -80,6 +80,10 @@ export default function StickyHeadTable({
   // ADDING FETCHED DETAILS OF APPLICANT FROM DATABASE TO THE TABLE
   const rows = fetchedDetails ? [...fetchedDetails] : [];
 
+  const ScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <section className="table_mainCntr">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -117,7 +121,10 @@ export default function StickyHeadTable({
                             {column.id === "action" ? (
                               <div>
                                 <Button
-                                  onClick={() => setEditDetails(row)}
+                                  onClick={() => {
+                                    ScrollToTop();
+                                    setEditDetails(row);
+                                  }}
                                   style={{ fontSize: "12px" }}
                                   className="editBtn btnAnim"
                                   variant="contained"

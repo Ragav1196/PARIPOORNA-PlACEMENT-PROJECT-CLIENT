@@ -23,6 +23,10 @@ export function MoreDetails({
     prefLocation: [],
   };
 
+  const ScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <section style={styles} className="moreDetailsCntr">
       <article>
@@ -42,7 +46,10 @@ export function MoreDetails({
 
         <div className="buttonsCntr">
           <Button
-            onClick={() => setEditDetails(details)}
+            onClick={() => {
+              ScrollToTop();
+              setEditDetails(details);
+            }}
             className="editBtn btnAnim"
             variant="contained"
           >
