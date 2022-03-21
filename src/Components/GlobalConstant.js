@@ -1,6 +1,14 @@
 export const API_URL = "https://paripoorna-placement-project.herokuapp.com";
 // export const API_URL = "http://localhost:9000";
 
+const ScrollToBottom = () => {
+  window.scrollTo({
+    top: document.body.offsetHeight,
+    left: 0,
+    behavior: "smooth",
+  });
+};
+
 export async function GetApplicantDetails(setFetchedDetails) {
   await fetch(`${API_URL}/details`, {
     method: "GET",
@@ -27,6 +35,7 @@ export async function AddApplicantDetails(
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER ADDING
   GetApplicantDetails(setFetchedDetails);
+  ScrollToBottom();
 }
 
 // TO EDIT THE SELECTED APPLICANT DETAILS AND PUSH TO THE DATABSE
@@ -50,7 +59,10 @@ export async function EditApplicantDetails(
     method: "GET",
   })
     .then((response) => response.json())
-    .then((response) => setFetchedDetails(response.data));
+    .then((response) => {
+      setFetchedDetails(response.data);
+      ScrollToBottom();
+    });
 }
 
 // TO DELETE APPLICANT DETAILS
