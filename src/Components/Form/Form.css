@@ -82,6 +82,15 @@
   margin-left: 15px;
 }
 
+.form_mainCntr .JobType > div > label > input {
+  display: none;
+}
+
+.form_mainCntr .JobType .RadioBtnBox {
+  border: 1px solid black;
+  padding: 3px 10px;
+}
+
 /* PREFERRED LOCATION MAIN CONTAINER */
 .form_mainCntr .pref_location {
   display: grid;

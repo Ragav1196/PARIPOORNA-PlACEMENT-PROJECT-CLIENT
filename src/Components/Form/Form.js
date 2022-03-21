@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { AddApplicantDetails, EditApplicantDetails } from "../GlobalConstant";
 import Button from "@mui/material/Button";
 import "./Form.css";
 
 export function Form({ editDetails, setFetchedDetails }) {
+  const [radioBtnClrChng, setRadioBtnClrChng] = useState({});
+
   // FORM VALIDATION
   const formValidationSchema = yup.object({
     name: yup.string().required(),
@@ -163,36 +165,80 @@ export function Form({ editDetails, setFetchedDetails }) {
               <div
                 className={errors.jobType && touched.jobType ? "errorsSpl" : ""}
               >
-                <input
-                  type="radio"
-                  id="ft"
-                  name="jobType"
-                  value="Full Time"
-                  checked={values.jobType === "Full Time"}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <label htmlFor="ft">FT</label>
-                <input
-                  type="radio"
-                  id="pt"
-                  name="jobType"
-                  value="Part Time"
-                  checked={values.jobType === "Part Time"}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <label htmlFor="pt">PT</label>
-                <input
-                  type="radio"
-                  id="consultant"
-                  name="jobType"
-                  value="Consultant"
-                  checked={values.jobType === "Consultant"}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <label htmlFor="consultant">Consultant</label>
+                <label htmlFor="ft">
+                  <input
+                    type="radio"
+                    id="ft"
+                    name="jobType"
+                    value="Full Time"
+                    checked={values.jobType === "Full Time"}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onClick={() => setRadioBtnClrChng({ value: "Full Time" })}
+                  />
+
+                  <span
+                    style={{
+                      backgroundColor:
+                        radioBtnClrChng.value === "Full Time"
+                          ? "#1576f563"
+                          : "initial",
+                    }}
+                    className="RadioBtnBox"
+                  >
+                    FT
+                  </span>
+                </label>
+
+                <label htmlFor="pt">
+                  <input
+                    type="radio"
+                    id="pt"
+                    name="jobType"
+                    value="Part Time"
+                    checked={values.jobType === "Part Time"}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onClick={() => setRadioBtnClrChng({ value: "Part Time" })}
+                  />
+
+                  <span
+                    style={{
+                      backgroundColor:
+                        radioBtnClrChng.value === "Part Time"
+                          ? "#1576f563"
+                          : "initial",
+                    }}
+                    className="RadioBtnBox"
+                  >
+                    PT
+                  </span>
+                </label>
+
+                <label htmlFor="consultant">
+                  <input
+                    type="radio"
+                    id="consultant"
+                    name="jobType"
+                    value="Consultant"
+                    checked={values.jobType === "Consultant"}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onClick={() => setRadioBtnClrChng({ value: "Consultant" })}
+                  />
+
+                  <span
+                    style={{
+                      backgroundColor:
+                        radioBtnClrChng.value === "Consultant"
+                          ? "#1576f563"
+                          : "initial",
+                    }}
+                    className="RadioBtnBox"
+                  >
+                    Consultant
+                  </span>
+                </label>
               </div>
             </div>
 
