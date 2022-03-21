@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:9000";
+export const API_URL = "https://paripoorna-placement-project.herokuapp.com";
 
 export async function GetApplicantDetails(setFetchedDetails) {
   await fetch(`${API_URL}/details`, {
