@@ -1,16 +1,33 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as yup from "yup";
-import { AddApplicantDetails, EditApplicantDetails } from "../GlobalConstant";
+import {
+  AddApplicantDetails,
+  EditApplicantDetails,
+  uploadToCloudinary,
+} from "../GlobalConstant";
 import Button from "@mui/material/Button";
 import "./Form.css";
 
 export function Form({ editDetails, setFetchedDetails }) {
+  // TO CHANGE THE COLOR OF THE RADIO BUTTON (JOB TYPE) WHEN CLICKED
   const [radioBtnClrChng, setRadioBtnClrChng] = useState({});
+
+  // TO SHOW THE IMAGE CHOSE IN THE INPUT FIELD
+  const [image, setImage] = useState("");
+
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const pictureRef = useRef(); // REF HOOK FOR THE INPUT FIELD OF THE PROFILE PICTURE
 
   // FORM VALIDATION
   const formValidationSchema = yup.object({
     name: yup.string().required(),
+    picture: yup.string().required(),
     countryCode: yup.number().required(),
     mobileNum: yup.number().required(),
     email: yup.string().required(),
@@ -31,6 +48,7 @@ export function Form({ editDetails, setFetchedDetails }) {
   } = useFormik({
     initialValues: {
       name: "",
+      picture: "",
       countryCode: "+91",
       mobileNum: "",
       email: "",
@@ -40,22 +58,49 @@ export function Form({ editDetails, setFetchedDetails }) {
     },
     validationSchema: formValidationSchema,
     onSubmit: (applicantDetails, { resetForm }) => {
+      // EDITING APPLICANT DETAILS
       if (editDetails) {
         return EditApplicantDetails(
           applicantDetails,
           resetForm,
           editDetails,
-          setFetchedDetails
+          setFetchedDetails,
+          setImage
         );
       }
-      AddApplicantDetails(applicantDetails, resetForm, setFetchedDetails);
+
+      // ADDING APPLICANT DETAILS
+      uploadToCloudinary(applicantDetails.picture)
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.secure_url) {
+            applicantDetails.picture = data.secure_url;
+            AddApplicantDetails(
+              applicantDetails,
+              resetForm,
+              setFetchedDetails,
+              setImage,
+              setRadioBtnClrChng,
+              pictureRef
+            );
+          }
+        })
+        .catch((err) => console.log(err));
     },
   });
 
   // TO ADD THE SELECTED APPLICANT DETAILS TO THE FORM FIELDS
   useEffect(() => {
     if (editDetails) {
+      setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
       for (let details in editDetails) {
+        if (details === "picture") {
+          setImage(editDetails[details]);
+        }
+
+        if (details === "jobType") {
+          setRadioBtnClrChng({ value: editDetails[details] });
+        }
         setFieldValue(details, editDetails[details]);
       }
     }
@@ -81,11 +126,20 @@ export function Form({ editDetails, setFetchedDetails }) {
             <div className="applicant_img_cntr mobileView applicant_img_cntr_MV">
               <img
                 className="applicant_img"
-                src="https://avatars.githubusercontent.com/u/91084155?v=4"
+                src={image ? image : "https://i.stack.imgur.com/l60Hf.png"}
                 alt="Profile"
               />
 
-              <input type="file" />
+              <input
+                type="file"
+                ref={pictureRef}
+                name="picture"
+                onChange={(e) => {
+                  setFieldValue("picture", e.target.files[0]);
+                  onImageChange(e);
+                }}
+                className={errors.picture && touched.picture ? "errorsSpl" : ""}
+              />
             </div>
 
             {/* FULL NAME */}
@@ -109,11 +163,22 @@ export function Form({ editDetails, setFetchedDetails }) {
               <div>
                 <img
                   className="applicant_img"
-                  src="https://avatars.githubusercontent.com/u/91084155?v=4"
+                  src={image ? image : "https://i.stack.imgur.com/l60Hf.png"}
                   alt="Profile"
                 />
 
-                <input type="file" />
+                <input
+                  type="file"
+                  ref={pictureRef}
+                  name="picture"
+                  onChange={(e) => {
+                    setFieldValue("picture", e.target.files[0]);
+                    onImageChange(e);
+                  }}
+                  className={
+                    errors.picture && touched.picture ? "errorsSpl" : ""
+                  }
+                />
               </div>
             </div>
 

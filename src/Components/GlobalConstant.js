@@ -21,7 +21,10 @@ export async function GetApplicantDetails(setFetchedDetails) {
 export async function AddApplicantDetails(
   applicantDetails,
   resetForm,
-  setFetchedDetails
+  setFetchedDetails,
+  setImage,
+  setRadioBtnClrChng,
+  pictureRef
 ) {
   await fetch(`${API_URL}/details`, {
     method: "POST",
@@ -31,7 +34,10 @@ export async function AddApplicantDetails(
     body: JSON.stringify(applicantDetails),
   });
 
-  resetForm(); //TO RESET THE FORM ONCE NEW APPLICANT ADDED
+  resetForm(); // TO RESET THE FORM ONCE NEW APPLICANT ADDED
+  setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
+  setRadioBtnClrChng(""); // TO CHANGE THE COLOR OF THE RADIO BUTTON BACK TO NORMAL
+  pictureRef.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAUL STATE
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER ADDING
   GetApplicantDetails(setFetchedDetails);
@@ -43,7 +49,8 @@ export async function EditApplicantDetails(
   applicantDetails,
   resetForm,
   editDetails,
-  setFetchedDetails
+  setFetchedDetails,
+  setImage
 ) {
   delete applicantDetails._id;
   await fetch(`${API_URL}/details/${editDetails._id}`, {
@@ -52,7 +59,8 @@ export async function EditApplicantDetails(
     headers: { "Content-Type": "application/json" },
   });
 
-  resetForm(); //TO RESET THE FORM ONCE APPLICANT DETAILS EDITED AND SAVED
+  resetForm(); // TO RESET THE FORM ONCE APPLICANT DETAILS EDITED AND SAVED
+  setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER EDITING
   await fetch(`${API_URL}/details`, {
@@ -74,3 +82,16 @@ export async function DeleteApplicantDetails(id, setFetchedDetails) {
   // TO REFRESH THE APPLICANT DETAILS TABLE AFTER DELETING
   GetApplicantDetails(setFetchedDetails);
 }
+
+// TO UPLOAD IMAGE TO THE CLOUDINARY PLATFORM
+export const uploadToCloudinary = (picture) => {
+  const data = new FormData();
+  data.append("file", picture);
+  data.append("upload_preset", "v8ffqqp5");
+  data.append("cloud_name", "dyi6asb8c");
+
+  return fetch("https://api.cloudinary.com/v1_1/dyi6asb8c/image/upload", {
+    method: "POST",
+    body: data,
+  });
+};
