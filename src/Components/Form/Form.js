@@ -7,7 +7,9 @@ import {
   uploadToCloudinary,
 } from "../GlobalConstant";
 import Button from "@mui/material/Button";
+import { JobType } from "./Input Fields/JobType";
 import "./Form.css";
+import { PreferredLocation } from "./Input Fields/PreferredLocation";
 
 export function Form({ editDetails, setFetchedDetails }) {
   // TO CHANGE THE COLOR OF THE RADIO BUTTON (JOB TYPE) WHEN CLICKED
@@ -18,7 +20,10 @@ export function Form({ editDetails, setFetchedDetails }) {
 
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
+      setImage({
+        URL: URL.createObjectURL(e.target.files[0]),
+        isNewPicAdded: true,
+      });
     }
   };
 
@@ -60,13 +65,35 @@ export function Form({ editDetails, setFetchedDetails }) {
     onSubmit: (applicantDetails, { resetForm }) => {
       // EDITING APPLICANT DETAILS
       if (editDetails) {
-        return EditApplicantDetails(
-          applicantDetails,
-          resetForm,
-          editDetails,
-          setFetchedDetails,
-          setImage
-        );
+        if (image.isNewPicAdded) {
+          uploadToCloudinary(applicantDetails.picture)
+            .then((data) => data.json())
+            .then((data) => {
+              applicantDetails.picture = data.secure_url;
+              EditApplicantDetails(
+                applicantDetails,
+                resetForm,
+                editDetails,
+                setFetchedDetails,
+                setImage,
+                pictureRef,
+                setRadioBtnClrChng
+              );
+            })
+            .catch((err) => console.log(err));
+          return;
+        } else {
+          EditApplicantDetails(
+            applicantDetails,
+            resetForm,
+            editDetails,
+            setFetchedDetails,
+            setImage,
+            pictureRef,
+            setRadioBtnClrChng
+          );
+          return;
+        }
       }
 
       // ADDING APPLICANT DETAILS
@@ -96,6 +123,10 @@ export function Form({ editDetails, setFetchedDetails }) {
       for (let details in editDetails) {
         if (details === "picture") {
           setImage(editDetails[details]);
+          setImage({
+            URL: editDetails[details],
+            isNewPicAdded: false,
+          });
         }
 
         if (details === "jobType") {
@@ -126,7 +157,7 @@ export function Form({ editDetails, setFetchedDetails }) {
             <div className="applicant_img_cntr mobileView applicant_img_cntr_MV">
               <img
                 className="applicant_img"
-                src={image ? image : "https://i.stack.imgur.com/l60Hf.png"}
+                src={image ? image.URL : "https://i.stack.imgur.com/l60Hf.png"}
                 alt="Profile"
               />
 
@@ -163,7 +194,9 @@ export function Form({ editDetails, setFetchedDetails }) {
               <div>
                 <img
                   className="applicant_img"
-                  src={image ? image : "https://i.stack.imgur.com/l60Hf.png"}
+                  src={
+                    image ? image.URL : "https://i.stack.imgur.com/l60Hf.png"
+                  }
                   alt="Profile"
                 />
 
@@ -223,89 +256,15 @@ export function Form({ editDetails, setFetchedDetails }) {
               />
             </label>
 
-            {/* JOB TYPE */}
-            <div className="JobType">
-              <p>Job Type</p>
-
-              <div
-                className={errors.jobType && touched.jobType ? "errorsSpl" : ""}
-              >
-                <label htmlFor="ft">
-                  <input
-                    type="radio"
-                    id="ft"
-                    name="jobType"
-                    value="Full Time"
-                    checked={values.jobType === "Full Time"}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    onClick={() => setRadioBtnClrChng({ value: "Full Time" })}
-                  />
-
-                  <span
-                    style={{
-                      backgroundColor:
-                        radioBtnClrChng.value === "Full Time"
-                          ? "#1576f563"
-                          : "initial",
-                    }}
-                    className="RadioBtnBox"
-                  >
-                    FT
-                  </span>
-                </label>
-
-                <label htmlFor="pt">
-                  <input
-                    type="radio"
-                    id="pt"
-                    name="jobType"
-                    value="Part Time"
-                    checked={values.jobType === "Part Time"}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    onClick={() => setRadioBtnClrChng({ value: "Part Time" })}
-                  />
-
-                  <span
-                    style={{
-                      backgroundColor:
-                        radioBtnClrChng.value === "Part Time"
-                          ? "#1576f563"
-                          : "initial",
-                    }}
-                    className="RadioBtnBox"
-                  >
-                    PT
-                  </span>
-                </label>
-
-                <label htmlFor="consultant">
-                  <input
-                    type="radio"
-                    id="consultant"
-                    name="jobType"
-                    value="Consultant"
-                    checked={values.jobType === "Consultant"}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    onClick={() => setRadioBtnClrChng({ value: "Consultant" })}
-                  />
-
-                  <span
-                    style={{
-                      backgroundColor:
-                        radioBtnClrChng.value === "Consultant"
-                          ? "#1576f563"
-                          : "initial",
-                    }}
-                    className="RadioBtnBox"
-                  >
-                    Consultant
-                  </span>
-                </label>
-              </div>
-            </div>
+            <JobType
+              errors={errors}
+              touched={touched}
+              values={values}
+              handleChange={handleChange}
+              setRadioBtnClrChng={setRadioBtnClrChng}
+              radioBtnClrChng={radioBtnClrChng}
+              handleBlur={handleBlur}
+            />
 
             {/* DATE OF BIRTH */}
             <label htmlFor="dob">
@@ -322,66 +281,16 @@ export function Form({ editDetails, setFetchedDetails }) {
             </label>
 
             {/* PREFERREFD LOCATION */}
-            <div className="pref_location">
-              <p>Pref. Location</p>
-
-              <div>
-                <div
-                  className={
-                    errors.prefLocation && touched.prefLocation
-                      ? "errorsSpl"
-                      : ""
-                  }
-                >
-                  <input
-                    type="checkbox"
-                    id="chennai"
-                    name="prefLocation"
-                    value="Chennai"
-                    checked={SetCheckboxValue("Chennai") === "Chennai"}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <label htmlFor="chennai">Chennai</label>
-                </div>
-                <div
-                  className={
-                    errors.prefLocation && touched.prefLocation
-                      ? "errorsSpl"
-                      : ""
-                  }
-                >
-                  <input
-                    type="checkbox"
-                    id="bangalore"
-                    name="prefLocation"
-                    value="Bangalore"
-                    checked={SetCheckboxValue("Bangalore") === "Bangalore"}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <label htmlFor="bangalore">Bangalore</label>
-                </div>
-                <div
-                  className={
-                    errors.prefLocation && touched.prefLocation
-                      ? "errorsSpl"
-                      : ""
-                  }
-                >
-                  <input
-                    type="checkbox"
-                    id="pune"
-                    name="prefLocation"
-                    value="Pune"
-                    checked={SetCheckboxValue("Pune") === "Pune"}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <label htmlFor="pune">Pune</label>
-                </div>
-              </div>
-            </div>
+            <PreferredLocation
+              errors={errors}
+              touched={touched}
+              values={values}
+              handleChange={handleChange}
+              setRadioBtnClrChng={setRadioBtnClrChng}
+              radioBtnClrChng={radioBtnClrChng}
+              handleBlur={handleBlur}
+              SetCheckboxValue={SetCheckboxValue}
+            />
           </article>
 
           {/* SUBMIT BUTTON */}

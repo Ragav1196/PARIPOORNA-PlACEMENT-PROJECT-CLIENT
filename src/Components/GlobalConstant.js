@@ -50,7 +50,9 @@ export async function EditApplicantDetails(
   resetForm,
   editDetails,
   setFetchedDetails,
-  setImage
+  setImage,
+  pictureRef,
+  setRadioBtnClrChng
 ) {
   delete applicantDetails._id;
   await fetch(`${API_URL}/details/${editDetails._id}`, {
@@ -61,6 +63,8 @@ export async function EditApplicantDetails(
 
   resetForm(); // TO RESET THE FORM ONCE APPLICANT DETAILS EDITED AND SAVED
   setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
+  setRadioBtnClrChng(""); // TO CHANGE THE COLOR OF THE RADIO BUTTON BACK TO NORMAL
+  pictureRef.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAULt STATE
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER EDITING
   await fetch(`${API_URL}/details`, {

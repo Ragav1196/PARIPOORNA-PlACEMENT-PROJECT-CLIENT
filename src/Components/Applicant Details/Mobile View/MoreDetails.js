@@ -38,10 +38,7 @@ export function MoreDetails({
 
       <article>
         <div>
-          <img
-            src="https://avatars.githubusercontent.com/u/91084155?v=4"
-            alt="Profile"
-          />
+          <img src={details.picture} alt="Profile" />
         </div>
 
         <div className="buttonsCntr">
