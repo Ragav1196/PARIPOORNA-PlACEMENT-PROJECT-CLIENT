@@ -159,7 +159,7 @@ export function MobileView({
                     </div>
                   );
                 } else {
-                  return <p>APPLICANT DOES NOT EXIST WITH THAT NAME</p>;
+                  return <p className="searchErr">APPLICANT DOES NOT EXIST WITH THAT NAME</p>;
                 }
               })}
         </div>

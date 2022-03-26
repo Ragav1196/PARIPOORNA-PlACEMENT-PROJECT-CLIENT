@@ -24,7 +24,8 @@ export async function AddApplicantDetails(
   setFetchedDetails,
   setImage,
   setRadioBtnClrChng,
-  pictureRef
+  pictureRef,
+  setEditBtn
 ) {
   await fetch(`${API_URL}/details`, {
     method: "POST",
@@ -38,6 +39,7 @@ export async function AddApplicantDetails(
   setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
   setRadioBtnClrChng(""); // TO CHANGE THE COLOR OF THE RADIO BUTTON BACK TO NORMAL
   pictureRef.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAUL STATE
+  setEditBtn(false);
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER ADDING
   GetApplicantDetails(setFetchedDetails);
@@ -52,7 +54,8 @@ export async function EditApplicantDetails(
   setFetchedDetails,
   setImage,
   pictureRef,
-  setRadioBtnClrChng
+  setRadioBtnClrChng,
+  setEditBtn
 ) {
   delete applicantDetails._id;
   await fetch(`${API_URL}/details/${editDetails._id}`, {
@@ -65,6 +68,7 @@ export async function EditApplicantDetails(
   setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
   setRadioBtnClrChng(""); // TO CHANGE THE COLOR OF THE RADIO BUTTON BACK TO NORMAL
   pictureRef.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAULt STATE
+  setEditBtn(false);
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER EDITING
   await fetch(`${API_URL}/details`, {

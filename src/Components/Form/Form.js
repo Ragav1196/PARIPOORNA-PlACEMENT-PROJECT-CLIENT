@@ -18,6 +18,9 @@ export function Form({ editDetails, setFetchedDetails }) {
   // TO SHOW THE IMAGE CHOSE IN THE INPUT FIELD
   const [image, setImage] = useState("");
 
+  // TO CHANGE THE ADD/UPDATE BUTTON TO SAVING... WHILE SAVING APPLICANT DETAILS
+  const [editBtn, setEditBtn] = useState();
+
   const onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage({
@@ -63,6 +66,8 @@ export function Form({ editDetails, setFetchedDetails }) {
     },
     validationSchema: formValidationSchema,
     onSubmit: (applicantDetails, { resetForm }) => {
+      setEditBtn(true);
+
       // EDITING APPLICANT DETAILS
       if (editDetails) {
         if (image.isNewPicAdded) {
@@ -77,7 +82,8 @@ export function Form({ editDetails, setFetchedDetails }) {
                 setFetchedDetails,
                 setImage,
                 pictureRef,
-                setRadioBtnClrChng
+                setRadioBtnClrChng,
+                setEditBtn
               );
             })
             .catch((err) => console.log(err));
@@ -90,7 +96,8 @@ export function Form({ editDetails, setFetchedDetails }) {
             setFetchedDetails,
             setImage,
             pictureRef,
-            setRadioBtnClrChng
+            setRadioBtnClrChng,
+            setEditBtn
           );
           return;
         }
@@ -108,7 +115,8 @@ export function Form({ editDetails, setFetchedDetails }) {
               setFetchedDetails,
               setImage,
               setRadioBtnClrChng,
-              pictureRef
+              pictureRef,
+              setEditBtn
             );
           }
         })
@@ -299,7 +307,9 @@ export function Form({ editDetails, setFetchedDetails }) {
             className="submit_btn btnAnim"
             variant="contained"
           >
-            ADD/UPDATE
+            {editBtn && !Object.keys(errors).length
+              ? "Saving...."
+              : "ADD/UPDATE"}
           </Button>
         </fieldset>
       </form>
