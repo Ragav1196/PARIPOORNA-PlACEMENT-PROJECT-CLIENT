@@ -30,7 +30,8 @@ export function Form({ editDetails, setFetchedDetails }) {
     }
   };
 
-  const pictureRef = useRef(); // REF HOOK FOR THE INPUT FIELD OF THE PROFILE PICTURE
+  const pictureDV_Ref = useRef(); // REF HOOK FOR THE INPUT FIELD OF THE PROFILE PICTURE -> DESKTOP VIEW
+  const pictureMV_Ref = useRef(); // REF HOOK FOR THE INPUT FIELD OF THE PROFILE PICTURE -> MOBILE VIEW
 
   // FORM VALIDATION
   const formValidationSchema = yup.object({
@@ -81,7 +82,8 @@ export function Form({ editDetails, setFetchedDetails }) {
                 editDetails,
                 setFetchedDetails,
                 setImage,
-                pictureRef,
+                pictureDV_Ref,
+                pictureMV_Ref,
                 setRadioBtnClrChng,
                 setEditBtn
               );
@@ -95,7 +97,8 @@ export function Form({ editDetails, setFetchedDetails }) {
             editDetails,
             setFetchedDetails,
             setImage,
-            pictureRef,
+            pictureDV_Ref,
+            pictureMV_Ref,
             setRadioBtnClrChng,
             setEditBtn
           );
@@ -115,7 +118,8 @@ export function Form({ editDetails, setFetchedDetails }) {
               setFetchedDetails,
               setImage,
               setRadioBtnClrChng,
-              pictureRef,
+              pictureDV_Ref,
+              pictureMV_Ref,
               setEditBtn
             );
           }
@@ -171,7 +175,7 @@ export function Form({ editDetails, setFetchedDetails }) {
 
               <input
                 type="file"
-                ref={pictureRef}
+                ref={pictureMV_Ref}
                 name="picture"
                 onChange={(e) => {
                   setFieldValue("picture", e.target.files[0]);
@@ -210,7 +214,7 @@ export function Form({ editDetails, setFetchedDetails }) {
 
                 <input
                   type="file"
-                  ref={pictureRef}
+                  ref={pictureDV_Ref}
                   name="picture"
                   onChange={(e) => {
                     setFieldValue("picture", e.target.files[0]);

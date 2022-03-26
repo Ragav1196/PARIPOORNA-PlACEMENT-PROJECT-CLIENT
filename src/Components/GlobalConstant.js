@@ -24,7 +24,8 @@ export async function AddApplicantDetails(
   setFetchedDetails,
   setImage,
   setRadioBtnClrChng,
-  pictureRef,
+  pictureDV_Ref,
+  pictureMV_Ref,
   setEditBtn
 ) {
   await fetch(`${API_URL}/details`, {
@@ -38,7 +39,8 @@ export async function AddApplicantDetails(
   resetForm(); // TO RESET THE FORM ONCE NEW APPLICANT ADDED
   setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
   setRadioBtnClrChng(""); // TO CHANGE THE COLOR OF THE RADIO BUTTON BACK TO NORMAL
-  pictureRef.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAUL STATE
+  pictureDV_Ref.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAUL STATE
+  pictureMV_Ref.current.value = "";
   setEditBtn(false);
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER ADDING
@@ -53,7 +55,8 @@ export async function EditApplicantDetails(
   editDetails,
   setFetchedDetails,
   setImage,
-  pictureRef,
+  pictureDV_Ref,
+  pictureMV_Ref,
   setRadioBtnClrChng,
   setEditBtn
 ) {
@@ -67,7 +70,8 @@ export async function EditApplicantDetails(
   resetForm(); // TO RESET THE FORM ONCE APPLICANT DETAILS EDITED AND SAVED
   setImage(""); // TO DELETE THE IMAGE  SHOWN IN THE FORM
   setRadioBtnClrChng(""); // TO CHANGE THE COLOR OF THE RADIO BUTTON BACK TO NORMAL
-  pictureRef.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAULt STATE
+  pictureDV_Ref.current.value = ""; // TO CHANGE THE INPUT FIELD OF PROFILE PICTURE BACK TO DEFAULt STATE
+  pictureMV_Ref.current.value = "";
   setEditBtn(false);
 
   // TO GET THE NEW APPLICANT DETAILS LIST FROM THE DATABASE AFTER EDITING
